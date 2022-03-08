@@ -1,18 +1,17 @@
 name: bump version
 on:
-  pull_request:
-    types:
-      - closed
-      
+  push:
+    branches:
+      - main
+      - dev
+     
+    
 
 jobs:
   version:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
       - name: 'Automated Version Bump'
         id: version-bump
         uses: 'phips28/gh-action-bump-version@master'
