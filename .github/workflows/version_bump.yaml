@@ -15,5 +15,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          minor-wording:  null
-          major-wording:  null
+          minor-wording:  "minor"
+          major-wording:  "major"
