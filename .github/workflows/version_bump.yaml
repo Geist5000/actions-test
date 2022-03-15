@@ -25,8 +25,6 @@ jobs:
         with:
           tag-prefix: 'v'
           bump-policy: 'ignore'
-          minor-wording: 'ab846c0e3717a3e7d14af45cab70b44a' # md5 hash of the word 'minro'
-          major-wording: 'f1425da40a9f2d21ab702a1c7feae026' # md5 hash of the word 'major'
           default: ${{github.events.inputs.bumpType}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
