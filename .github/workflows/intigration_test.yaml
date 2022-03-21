@@ -37,10 +37,10 @@ jobs:
         uses: php-actions/composer@v6
         with: 
           dev: 'no'
-          php_version: "8.0"
           version: 2
           args: '--optimize-autoloader'
           working_dir: 'backend'
+          php_extensions: mbstring, dom, fileinfo, mysql
       - name: setup backend
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
