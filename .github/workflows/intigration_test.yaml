@@ -30,7 +30,6 @@ jobs:
         with:
           repository: 'ricom/toolbox-frontend'
           path: 'frontend'
-      - run: sleep 20s
       - name: Composer (php-actions)
         uses: php-actions/composer@v6
         with: 
@@ -40,6 +39,8 @@ jobs:
           args: '--optimize-autoloader'
           working_dir: 'backend'
       - name: setup backend
+        env:
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
         working-directory: backend
         run: | 
           cp .env.example .env
