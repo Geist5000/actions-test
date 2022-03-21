@@ -29,12 +29,12 @@ jobs:
           version: 2
           args: '--optimize-autoloader'
           working_dir: 'backend'
+      - run: touch $DB_DATABASE
       - working-directory: backend
-        run: cp .env.example .env
-      - working-directory: backend
-        run: 'php artisan key:generate'
-      - working-directory: backend
-        run: 'php artisan migrate --seed'
+        run: | 
+          cp .env.example .env
+          php artisan key:generate
+          php artisan migrate --seed
         
       
 
