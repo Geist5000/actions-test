@@ -44,7 +44,9 @@ jobs:
           php artisan key:generate
           php artisan migrate --seed
           php artisan passport:install > passport_keys.log
-          cat passport_keys.log
+          $key=(perl -lne 'print $1 if /^.*: (.*)$/' < tail -n 1 passport_keys.log)
+          echo $key
+          echo "CLIENT_SECRET=$key" >> $GITHUB_ENV
       - name: remove dev dependencies
         uses: php-actions/composer@v6
         with: 
