@@ -23,7 +23,7 @@ jobs:
         uses: samin/mysql-action@v1
         with:
           mysql database: 'toolbox'
-          mysql root password: '${{env.DB_PASSWORD}}'
+          mysql root password: 'super_secure_password'
       - name: Composer (php-actions)
         uses: php-actions/composer@v6
         with: 
