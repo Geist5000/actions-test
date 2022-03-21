@@ -33,9 +33,7 @@ jobs:
       - name: Composer (php-actions)
         uses: php-actions/composer@v6
         with: 
-          dev: 'no'
           version: 2
-          args: '--optimize-autoloader'
           working_dir: 'backend'
       - name: setup backend
         env:
@@ -45,6 +43,13 @@ jobs:
           cp .env.example .env
           php artisan key:generate
           php artisan migrate --seed
+      - name: remove dev dependencies
+        uses: php-actions/composer@v6
+        with: 
+          dev: 'no'
+          version: 2
+          args: '--optimize-autoloader'
+          working_dir: 'backend'
         
       
 
