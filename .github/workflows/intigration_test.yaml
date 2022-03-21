@@ -11,7 +11,7 @@ jobs:
     env:
       DB_CONNECTION: 'sqlite'
       DB_DATABASE: '/tmp/backend_database.sqlite'
-      DB_FOREIGN_KEYS: true
+      DB_FOREIGN_KEYS: false
     steps:
       - uses: actions/checkout@v3
         with:
@@ -30,7 +30,8 @@ jobs:
           args: '--optimize-autoloader'
           working_dir: 'backend'
       - run: touch $DB_DATABASE
-      - working-directory: backend
+      - name: setup backend
+        working-directory: backend
         run: | 
           cp .env.example .env
           php artisan key:generate
