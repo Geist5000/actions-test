@@ -36,7 +36,7 @@ jobs:
           version: 2
           working_dir: 'backend'
       - name: install perl
-        run: sudo apt install perl
+        run: sudo apt install tail
       - name: setup backend
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
@@ -46,7 +46,7 @@ jobs:
           php artisan key:generate
           php artisan migrate --seed
           php artisan passport:install > passport_keys.log
-          perl -lne 'print $1 if /^.*: (.*)$/' < tail -n 1 passport_keys.log > client_secret.txt
+          tail -n 1 passport_keys.log | perl -lne 'print $1 if /^.*: (.*)$/'  > client_secret.txt
           cat client_secret.txt
           echo "CLIENT_SECRET=$key" >> $GITHUB_ENV
       - name: remove dev dependencies
