@@ -50,6 +50,26 @@ jobs:
           version: 2
           args: '--optimize-autoloader'
           working_dir: 'backend'
+      - name: cache laravel application
+        working-directory: backend
+        run: |
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          
+      - name: start backend server
+        working-directory: backend
+        run: |
+          nohup php -S localhost:80 server.php > phpd.log 2>&1 &
+          echo "::set-env name=PHP_BACKEND_SERVER_PID::$!"
+      - name: check backend server
+        run: curl localhost
+          
+      - name: stop backend server
+        working-directory: backend
+        run: |
+          kill -3 $PHP_BACKEND_SERVER_PID
+          
         
       
 
