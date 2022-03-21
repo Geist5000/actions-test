@@ -8,7 +8,7 @@ env:
 
 
 jobs:
-  test:
+  test-backend-with-frontend:
     services:
       mysql:
         image: mysql:latest
@@ -43,6 +43,8 @@ jobs:
           cp .env.example .env
           php artisan key:generate
           php artisan migrate --seed
+          php artisan passport:install > passport_keys.log
+          cat passport_keys.log
       - name: remove dev dependencies
         uses: php-actions/composer@v6
         with: 
@@ -62,11 +64,8 @@ jobs:
         run: |
           nohup php -S localhost:8000 server.php > phpd.log 2>&1 &
           echo "PHP_BACKEND_SERVER_PID=$!" >> $GITHUB_ENV
-          sleep 10
-          curl localhost:8000
       - name: check backend server
         run: |
-          cat backend/phpd.log
           curl localhost:8000
           
         
