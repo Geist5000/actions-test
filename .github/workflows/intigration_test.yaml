@@ -35,6 +35,8 @@ jobs:
         with: 
           version: 2
           working_dir: 'backend'
+      - name: install perl
+        run: sudo apt install perl
       - name: setup backend
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
@@ -66,6 +68,22 @@ jobs:
         run: |
           nohup php -S localhost:8000 server.php > phpd.log 2>&1 &
           echo "PHP_BACKEND_SERVER_PID=$!" >> $GITHUB_ENV
+          
+          
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: install dependencies
+        working-directory: frontend
+        run: npm install
+      - name: build react app
+        working-directory: frontend
+        env:
+          REACT_APP_CLIENT_ID: 2
+          REACT_APP_CLIENT_SECRET: '${{env.CLIENT_SECRET}}'
+          CI: false
+        run: npm run build
+        
       - name: check backend server
         run: |
           curl localhost:8000
