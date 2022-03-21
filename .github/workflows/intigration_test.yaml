@@ -6,7 +6,14 @@ on:
 
 
 jobs:
-  version:
+  test:
+    services:
+      mysql:
+        image: mysql:8.0.21
+        env:
+          MYSQL_DATABASE: toolbox
+        ports:
+          - 3306:3306
     runs-on: ubuntu-latest
     env:
       DB_PASSWORD: 'root'
