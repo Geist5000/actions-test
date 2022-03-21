@@ -30,6 +30,7 @@ jobs:
         with:
           repository: 'ricom/toolbox-frontend'
           path: 'frontend'
+      - run: sleep 20s
       - name: Composer (php-actions)
         uses: php-actions/composer@v6
         with: 
