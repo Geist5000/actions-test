@@ -40,7 +40,6 @@ jobs:
           version: 2
           args: '--optimize-autoloader'
           working_dir: 'backend'
-          php_extensions: mbstring, dom, fileinfo, mysql
       - name: setup backend
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
