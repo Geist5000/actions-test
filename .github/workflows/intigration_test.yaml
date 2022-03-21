@@ -60,12 +60,12 @@ jobs:
       - name: start backend server
         working-directory: backend
         run: |
-          nohup php -S localhost:80 server.php > phpd.log 2>&1 &
+          nohup php -S localhost:8000 server.php > phpd.log 2>&1 &
           echo "PHP_BACKEND_SERVER_PID=$!" >> $GITHUB_ENV
       - name: check backend server
         run: |
-          cat backend/phd.log
-          curl localhost
+          cat backend/phpd.log
+          curl localhost:8000
           
         
           
