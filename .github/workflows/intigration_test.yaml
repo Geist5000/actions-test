@@ -61,7 +61,7 @@ jobs:
         working-directory: backend
         run: |
           nohup php -S localhost:80 server.php > phpd.log 2>&1 &
-          echo "::set-env name=PHP_BACKEND_SERVER_PID::$!"
+          echo "PHP_BACKEND_SERVER_PID=$!" >> $GITHUB_ENV
       - name: check backend server
         run: curl localhost
           
