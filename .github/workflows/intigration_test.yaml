@@ -15,9 +15,10 @@ jobs:
           path: 'backend'
       - uses: actions/checkout@v3
         with:
-          repository: 'rico/toolbox-frontend'
+          repository: 'ricom/toolbox-frontend'
           path: 'frontend'
-      - run: echo pwd
+      - run: pwd
+      - run: ls -la
 
 
 
