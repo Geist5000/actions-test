@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DB_PASSWORD: 'super_secure_password'
+      DB_USERNAME: 'dev'
     steps:
       - uses: actions/checkout@v3
         with:
@@ -23,7 +24,8 @@ jobs:
         uses: samin/mysql-action@v1
         with:
           mysql database: 'toolbox'
-          mysql root password: 'super_secure_password'
+          mysql password: '${{env.DB_PASSWORD}}'
+          mysql user: '${{env.DB_USERNAME}}'
       - name: Composer (php-actions)
         uses: php-actions/composer@v6
         with: 
