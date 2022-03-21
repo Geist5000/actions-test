@@ -62,6 +62,8 @@ jobs:
         run: |
           nohup php -S localhost:8000 server.php > phpd.log 2>&1 &
           echo "PHP_BACKEND_SERVER_PID=$!" >> $GITHUB_ENV
+          sleep 10
+          curl localhost:8000
       - name: check backend server
         run: |
           cat backend/phpd.log
