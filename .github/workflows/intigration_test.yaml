@@ -35,8 +35,6 @@ jobs:
         with: 
           version: 2
           working_dir: 'backend'
-      - name: install perl
-        run: sudo apt install tail
       - name: setup backend
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
