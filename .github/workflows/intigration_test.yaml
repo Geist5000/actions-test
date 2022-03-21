@@ -21,7 +21,6 @@ jobs:
         with:
           repository: 'ricom/toolbox-frontend'
           path: 'frontend'
-      - run: cd backend
       - name: Composer (php-actions)
         uses: php-actions/composer@v6
         with: 
@@ -30,9 +29,13 @@ jobs:
           version: 2
           args: '--optimize-autoloader'
           working_dir: 'backend'
-      - run: cp .env.example .env
-      - run: 'php artisan key:generate'
-      - run: 'php artisan migrate --seed'
+      - working-directory: backend
+        run: cp .env.example .env
+      - working-directory: backend
+        run: 'php artisan key:generate'
+      - working-directory: backend
+        run: 'php artisan migrate --seed'
+        
       
 
 
