@@ -9,9 +9,7 @@ jobs:
   version:
     runs-on: ubuntu-latest
     env:
-      DB_CONNECTION: 'sqlite'
-      DB_DATABASE: '/tmp/backend_database.sqlite'
-      DB_FOREIGN_KEYS: false
+      DB_PASSWORD: 'super_secure_password'
     steps:
       - uses: actions/checkout@v3
         with:
@@ -21,6 +19,11 @@ jobs:
         with:
           repository: 'ricom/toolbox-frontend'
           path: 'frontend'
+      - name: setup mysql
+        uses: samin/mysql-action@v1
+        with:
+          mysql database: 'toolbox'
+          mysql root password: '$DB_PASSWORD'
       - name: Composer (php-actions)
         uses: php-actions/composer@v6
         with: 
@@ -29,7 +32,6 @@ jobs:
           version: 2
           args: '--optimize-autoloader'
           working_dir: 'backend'
-      - run: touch $DB_DATABASE
       - name: setup backend
         working-directory: backend
         run: | 
