@@ -3,21 +3,24 @@ name: backend_test
 on:
   push:
 
+env:
+  DB_PASSWORD: 'super_secret_password'
+  DB_USERNAME: 'dev'
 
 
 jobs:
   test:
     services:
       mysql:
-        image: mysql:8.0.21
+        image: mysql
         env:
           MYSQL_DATABASE: toolbox
+          MYSQL_USERNAME: '${{env.DB_USERNAME}}'
+          MYSQL_PASSWORD: '${{env.DB_PASSWORD}}'
         ports:
           - 3306:3306
     runs-on: ubuntu-latest
-    env:
-      DB_PASSWORD: 'root'
-      DB_USERNAME: 'root'
+    
     steps:
       - uses: actions/checkout@v3
         with:
