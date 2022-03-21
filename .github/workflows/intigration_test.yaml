@@ -1,1 +1,23 @@
 
+name: backend_test
+on:
+  push:
+
+
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: 'ricom/toolbox-backend'
+          path: 'backend'
+      - uses: actions/checkout@v3
+        with:
+          repository: 'rico/toolbox-frontend'
+          path: 'frontend'
+      - run: echo pwd
+
+
+
