@@ -45,6 +45,7 @@ jobs:
           php artisan key:generate
           php artisan migrate --seed
           php artisan passport:install > passport_keys.log
+          cat passport_keys.log
           key=$(tail -n 1 passport_keys.log | perl -lne 'print $1 if /^.*: (.*)$/')
           echo "CLIENT_SECRET=$key" >> $GITHUB_ENV
       - name: remove dev dependencies
