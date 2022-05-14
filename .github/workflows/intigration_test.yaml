@@ -90,5 +90,11 @@ jobs:
         with:
           name: php-log
           path: backend/phpd.log
+      - name: added build as artifact
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: build
+          path: frontend/build
           
           
