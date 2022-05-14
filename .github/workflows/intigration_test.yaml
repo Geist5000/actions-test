@@ -68,6 +68,8 @@ jobs:
           echo "PHP_BACKEND_SERVER_PID=$!" >> $GITHUB_ENV
       - name: install serve
         run: npm install -g serve
+      - name: test backend
+        run: curl localhost:8000
 
       - name: Cypress run
         uses: cypress-io/github-action@v2
@@ -81,18 +83,6 @@ jobs:
           REACT_APP_CLIENT_SECRET: '${{env.CLIENT_SECRET}}'
           REACT_APP_API: 'http://localhost:8000/'
           CYPRESS_VIDEO: false
-      - name: added videos as artifact
-        uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: cypress-videos
-          path: frontend/cypress/screenshots
-      - name: added logs as artifact
-        uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: cypress-logs
-          path: frontend/cypress/logs
       - name: added logs as artifact
         uses: actions/upload-artifact@v2
         if: always()
