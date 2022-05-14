@@ -28,6 +28,8 @@ jobs:
           path: 'backend'
       - uses: actions/checkout@v3
         with:
+          repository: 'ricom/toolbox-frontend'
+          ref: 'feature/testing'
           path: 'frontend'
       - name: Composer (php-actions)
         uses: php-actions/composer@v6
