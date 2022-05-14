@@ -67,7 +67,7 @@ jobs:
       - name: cache config
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
-          APP_ENV: production
+          APP_ENV: local
           APP_URL: http://localhost:8000
           APP_DEBUG: false
           FRONTEND_URL: http://localhost:3000
