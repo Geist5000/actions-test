@@ -31,6 +31,11 @@ jobs:
           repository: 'ricom/toolbox-frontend'
           ref: 'feature/testing'
           path: 'frontend'
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: /tmp/composer-cache
+          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
       - name: Composer (php-actions)
         uses: php-actions/composer@v6
         with:
@@ -39,6 +44,10 @@ jobs:
       - name: setup backend
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          APP_ENV: production
+          APP_URL: http://localhost:8000
+          APP_DEBUG: false
+          FRONTEND_URL: http://localhost:3000
         working-directory: backend
         run: |
           cp .env.example .env
@@ -47,6 +56,9 @@ jobs:
           php artisan passport:install > passport_keys.log
           key=$(tail -n 1 passport_keys.log | perl -lne 'print $1 if /^.*: (.*)$/')
           echo "CLIENT_SECRET=$key" >> $GITHUB_ENV
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
       - name: remove dev dependencies
         uses: php-actions/composer@v6
         with:
@@ -54,18 +66,6 @@ jobs:
           version: 2
           args: '--optimize-autoloader'
           working_dir: 'backend'
-      - name: cache laravel application
-        env:
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
-          APP_ENV: production
-          APP_URL: http://localhost:8000
-          APP_DEBUG: false
-          FRONTEND_URL: http://localhost:3000
-        working-directory: backend
-        run: |
-          php artisan config:cache
-          php artisan route:cache
-          php artisan view:cache
 
       - name: start backend server
         working-directory: backend
@@ -99,5 +99,10 @@ jobs:
             backend/passport_keys.log
             frontend/cypress/screenshots
             frontend/cypress/logs
+      - name: stop backend server
+        if: always()
+        working-directory: backend
+        run: |
+          kill -3 $PHP_BACKEND_SERVER_PID
           
           
