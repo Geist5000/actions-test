@@ -56,9 +56,6 @@ jobs:
           php artisan passport:install > passport_keys.log
           key=$(tail -n 1 passport_keys.log | perl -lne 'print $1 if /^.*: (.*)$/')
           echo "CLIENT_SECRET=$key" >> $GITHUB_ENV
-          php artisan config:cache
-          php artisan route:cache
-          php artisan view:cache
       - name: remove dev dependencies
         uses: php-actions/composer@v6
         with:
@@ -67,6 +64,18 @@ jobs:
           args: '--optimize-autoloader'
           working_dir: 'backend'
 
+      - name: cache config
+        env:
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          APP_ENV: production
+          APP_URL: http://localhost:8000
+          APP_DEBUG: false
+          FRONTEND_URL: http://localhost:3000
+        working-directory: backend
+        run: |
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
       - name: start backend server
         working-directory: backend
         id: backendStart
