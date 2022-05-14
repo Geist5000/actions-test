@@ -57,6 +57,10 @@ jobs:
       - name: cache laravel application
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          APP_ENV: production
+          APP_URL: http://localhost:8000
+          APP_DEBUG: false
+          FRONTEND_URL: http://localhost:3000
         working-directory: backend
         run: |
           php artisan config:cache
